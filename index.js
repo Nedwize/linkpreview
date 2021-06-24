@@ -1,8 +1,8 @@
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 
-const scrapeLink = async () => {
-  let response = await fetch(`https://github.com`);
+const scrapeLink = async (URL) => {
+  let response = await fetch(URL);
   let body = await response.text();
   const $ = cheerio.load(body);
 
@@ -49,4 +49,4 @@ const getImage = ($) => {
   return { ogImage, twitterImage, twitterImage2 };
 };
 
-scrapeLink();
+scrapeLink('https://amazon.com');
