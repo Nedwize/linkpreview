@@ -5,14 +5,12 @@ const scrapeLink = async () => {
   let response = await fetch(`https://github.com`);
   let body = await response.text();
   const $ = cheerio.load(body);
-  const title = getTitle($);
-  const description = getDescription($);
-  const url = getURL($);
 
   let preview = {
-    title,
-    description,
-    url,
+    title: getTitle($),
+    description: getDescription($),
+    url: getURL($),
+    image: getImage($),
   };
   console.log(preview);
 };
@@ -42,6 +40,13 @@ const getURL = ($) => {
   const ogURL = $('meta[property="og:url"]').attr('content');
   const canonicalURL = $('link[rel=canonical]').attr('href');
   return { ogURL, canonicalURL };
+};
+
+const getImage = ($) => {
+  const ogImage = $('meta[property="og:image"]').attr('content');
+  const twitterImage = $('meta[name="twitter:image:src"]').attr('content');
+  const twitterImage2 = $('meta[name="twitter:image"]').attr('content');
+  return { ogImage, twitterImage, twitterImage2 };
 };
 
 scrapeLink();
