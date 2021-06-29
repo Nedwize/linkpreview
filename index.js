@@ -12,7 +12,7 @@ const scrapeLink = async (URL) => {
     url: getURL($),
     image: getImage($),
   };
-  console.log(preview);
+  return preview;
 };
 
 const getTitle = ($) => {
@@ -46,7 +46,9 @@ const getImage = ($) => {
   const ogImage = $('meta[property="og:image"]').attr('content');
   const twitterImage = $('meta[name="twitter:image:src"]').attr('content');
   const twitterImage2 = $('meta[name="twitter:image"]').attr('content');
-  return { ogImage, twitterImage, twitterImage2 };
+
+  const image = twitterImage ? twitterImage : twitterImage2;
+  return { ogImage, twitterImage: image };
 };
 
-scrapeLink('https://amazon.com');
+module.exports = { scrapeLink };
